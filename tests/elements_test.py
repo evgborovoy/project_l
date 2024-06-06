@@ -28,6 +28,24 @@ class TestElements:
             assert checked_boxes in result, f"Items not equal"
 
 
+    class TestRadioButton():
+
+        def test_select_item(self, driver):
+            radio_button_page = pe.RadioButtonPage(driver, "https://demoqa.com/radio-button")
+            radio_button_page.open()
+            status = radio_button_page.select_item("yes")
+            output = radio_button_page.check_status()
+            assert output == status[0], "'Yes' is not selected from output"
+            assert status[1], "'Yes' is not selected from status"
+            status = radio_button_page.select_item("impressive")
+            output = radio_button_page.check_status()
+            assert output == status[0], "'Impressive' is not selected from output"
+            assert status[1], "'Impressive' is not selected from status"
+
+
+
+
+
 
 
 

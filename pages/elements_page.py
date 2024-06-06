@@ -42,7 +42,7 @@ class CheckBoxPage(BasePage):
     def select_random_checkbox(self):
         item_list = self.elements_are_visible(self.locators.ALL_TITLES_LIST)
         indexes = list(range(len(item_list)))
-        for i in range(5):
+        for i in range(7):
             item = item_list[random.choice(indexes)]
             if item.text in ["Home", "Desktop", "Documents", "WorkSpace", "Office", "Downloads"]:
                 continue
@@ -55,10 +55,27 @@ class CheckBoxPage(BasePage):
         for box in checked_item:
             title = box.find_element("xpath", ".//ancestor::span[@class='rct-text']").text.replace(" ", "").replace(
                 ".doc", "").lower()
-            print(title)
             result.append(title)
         return str(result)
 
     def get_output_result(self):
         result = [i.text.lower() for i in self.elements_are_present(self.locators.SELECTED_ITEMS_LOCATOR)]
         return str(result)
+
+
+class RadioButtonPage(BasePage):
+    locators = epl.RadioButtonPageLocators()
+
+    def select_item(self, choice):
+        choices = {
+            "yes": [self.locators.YES_RADIO_ACTION, self.locators.YES_RADIO_STATUS],
+            "impressive": [self.locators.IMP_RADIO_ACTION, self.locators.IMP_RADIO_STATUS],
+        }
+        radio_button = self.element_is_visible(choices[choice][0])
+        radio_button.click()
+        radio_button_status = self.element_is_present(choices[choice][1])
+        return radio_button.text, radio_button_status.is_selected()
+
+    def check_status(self):
+        status = self.element_is_present(self.locators.CHECK_RADIO).text
+        return status
