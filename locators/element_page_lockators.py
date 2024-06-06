@@ -16,3 +16,9 @@ class TextBoxPageLockators:
     CREATED_CURRENT_ADDRESS = (By.XPATH, "//p[@id='currentAddress']")
     CREATED_PERMANENT_ADDRESS = (By.XPATH, "//p[@id='permanentAddress']")
 
+class CheckBoxPageLocators:
+
+    EXPAND_ALL_BUTTON = (By.XPATH, "//button[@aria-label='Expand all']")
+    ALL_TITLES_LIST = (By.XPATH, "//span[@class='rct-title']")
+    CHECKED_ITEMS_LOCATOR = (By.CSS_SELECTOR, "svg[class='rct-icon rct-icon-check']")
+    SELECTED_ITEMS_LOCATOR = (By.XPATH, "//span[@class='text-success']")
