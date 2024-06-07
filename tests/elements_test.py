@@ -110,5 +110,18 @@ class TestElements:
             button_page = pe.ButtonsPage(driver, "https://demoqa.com/buttons")
             button_page.open()
             result = button_page.right_click()
-
             assert result
+
+    class TestLinksPage:
+
+        def test_simple_link(self, driver):
+            links_page = pe.LinksPage(driver, "https://demoqa.com/links")
+            links_page.open()
+            href_link, current_link = links_page.simple_link()
+            assert href_link == current_link, f"Can not open link {href_link}: {current_link}"
+
+        def test_broken_link(self, driver):
+            links_page = pe.LinksPage(driver, "https://demoqa.com/links")
+            links_page.open()
+            result = links_page.bad_link("https://demoqa.com/bad-request")
+            assert result == 400, f"Unexpected result: {result}"

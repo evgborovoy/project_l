@@ -1,4 +1,5 @@
 import random
+import requests
 
 from generator.generator import generated_person
 import locators.element_page_lockators as epl
@@ -173,3 +174,23 @@ class ButtonsPage(BasePage):
         if self.element_is_present(self.locators.CHECK_RIGHT_CLICK_BUTTON):
             return True
         return False
+
+class LinksPage(BasePage):
+    locators = epl.LinksPageLocators()
+
+    def simple_link(self):
+        link = self.element_is_visible(self.locators.SIMPLE_LINK)
+        url = link.get_attribute("href")
+        response = requests.get(url)
+        if response.status_code == 200:
+            link.click()
+            self.driver.switch_to.window(self.driver.window_handles[1])
+            current_url = self.driver.current_url
+            return url, current_url
+        return url, response.status_code
+
+    def bad_link(self, url):
+        response = requests.get(url)
+        if response.status_code == 400:
+            return response.status_code
+        self.element_is_visible(self.locators.BROKEN_LINK)

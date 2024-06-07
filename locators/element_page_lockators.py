@@ -57,3 +57,7 @@ class ButtonPageLocators:
     CHECK_CLICK_BUTTON = (By.XPATH, "//p[@id='dynamicClickMessage']")
     CHECK_RIGHT_CLICK_BUTTON = (By.XPATH, "//p[@id='rightClickMessage']")
     CHECK_DOUBLE_CLICK_BUTTON = (By.XPATH, "//p[@id='doubleClickMessage']")
+
+class LinksPageLocators:
+    SIMPLE_LINK = (By.XPATH, "//a[@id='simpleLink']")
+    BROKEN_LINK = (By.XPATH, "//a[@id='bad-request']")
