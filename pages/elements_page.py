@@ -1,5 +1,4 @@
 import random
-import time
 
 from generator.generator import generated_person
 import locators.element_page_lockators as epl
@@ -83,7 +82,7 @@ class RadioButtonPage(BasePage):
 
 
 class WebTablesPage(BasePage):
-    locators = epl.WebTablesLocators
+    locators = epl.WebTablesLocators()
 
     def add_record(self):
         """Add record in table about person"""
@@ -106,8 +105,7 @@ class WebTablesPage(BasePage):
             age = person_info.age
             salary = person_info.salary
             department = person_info.department
-            self.element_is_clickable(self.locators.ADD_RECORD_BUTTON).click()
-            time.sleep(2)
+            self.element_is_visible(self.locators.ADD_RECORD_BUTTON).click()
             self.element_is_visible(self.locators.FIRST_NAME_INPUT).send_keys(first_name)
             self.element_is_visible(self.locators.LAST_NAME_INPUT).send_keys(last_name)
             self.element_is_visible(self.locators.EMAIL_INPUT).send_keys(email)
@@ -136,7 +134,7 @@ class WebTablesPage(BasePage):
         self.element_is_visible(self.locators.UPDATE_BUTTON).click()
         self.element_is_visible(self.locators.AGE_INPUT).clear()
         self.element_is_visible(self.locators.AGE_INPUT).send_keys(age)
-        self.element_is_clickable(self.locators.SUBMIT_BUTTON).click()
+        self.element_is_visible(self.locators.SUBMIT_BUTTON).click()
         return str(age)
 
     def delete_record(self):
@@ -151,3 +149,27 @@ class WebTablesPage(BasePage):
             count_row_button.select_by_value(str(i))
             data.append(len(self.get_table_records()))
         return data, rows_quantity
+
+
+class ButtonsPage(BasePage):
+    locators = epl.ButtonPageLocators()
+
+    def one_click(self):
+        self.element_is_clickable(self.locators.CLICK_BUTTON).click()
+        if self.element_is_present(self.locators.CHECK_CLICK_BUTTON):
+            return True
+        return False
+
+    def double_click(self):
+        self.go_to_element(self.element_is_visible(self.locators.DOUBLE_CLICK_BUTTON))
+        self.action_double_click(self.element_is_clickable(self.locators.DOUBLE_CLICK_BUTTON))
+        if self.element_is_present(self.locators.CHECK_DOUBLE_CLICK_BUTTON):
+            return True
+        return False
+
+    def right_click(self):
+        self.go_to_element(self.element_is_visible(self.locators.RIGHT_CLICK_BUTTON))
+        self.action_right_click(self.element_is_clickable(self.locators.RIGHT_CLICK_BUTTON))
+        if self.element_is_present(self.locators.CHECK_RIGHT_CLICK_BUTTON):
+            return True
+        return False

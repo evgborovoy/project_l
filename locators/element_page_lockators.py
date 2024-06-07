@@ -48,3 +48,12 @@ class WebTablesLocators:
     DELETE_BUTTON = (By.XPATH, "//span[@title='Delete']")
     UPDATE_BUTTON = (By.XPATH, "//span[@title='Edit']")
     SELECT_FIELD = (By.XPATH, "//select")
+
+
+class ButtonPageLocators:
+    CLICK_BUTTON = (By.XPATH, "//button[text()='Click Me']")
+    DOUBLE_CLICK_BUTTON = (By.XPATH, "//button[@id='doubleClickBtn']")
+    RIGHT_CLICK_BUTTON = (By.XPATH, "//button[@id='rightClickBtn']")
+    CHECK_CLICK_BUTTON = (By.XPATH, "//p[@id='dynamicClickMessage']")
+    CHECK_RIGHT_CLICK_BUTTON = (By.XPATH, "//p[@id='rightClickMessage']")
+    CHECK_DOUBLE_CLICK_BUTTON = (By.XPATH, "//p[@id='doubleClickMessage']")

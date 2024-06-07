@@ -91,3 +91,24 @@ class TestElements:
             web_table_page.open()
             data = web_table_page.select_rows_quantity()
             assert data[0] == data[1], "There is error in select rows quantity"
+
+    class TestButtonsPage:
+
+        def test_click_button(self, driver):
+            button_page = pe.ButtonsPage(driver, "https://demoqa.com/buttons")
+            button_page.open()
+            result = button_page.one_click()
+            assert result, "Button was not clicked"
+
+        def test_double_click_button(self, driver):
+            button_page = pe.ButtonsPage(driver, "https://demoqa.com/buttons")
+            button_page.open()
+            result = button_page.double_click()
+            assert result
+
+        def test_right_click_button(self, driver):
+            button_page = pe.ButtonsPage(driver, "https://demoqa.com/buttons")
+            button_page.open()
+            result = button_page.right_click()
+
+            assert result
