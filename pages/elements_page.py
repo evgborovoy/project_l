@@ -4,10 +4,11 @@ import time
 from generator.generator import generated_person
 import locators.element_page_lockators as epl
 from pages.base_page import BasePage
+from selenium.webdriver.support.select import Select
 
 
 class TextBoxPage(BasePage):
-    locators = epl.TextBoxPageLockators
+    locators = epl.TextBoxPageLocators
 
     def fill_all_fields(self):
         person_info = next(generated_person())
@@ -79,3 +80,74 @@ class RadioButtonPage(BasePage):
     def check_status(self):
         status = self.element_is_present(self.locators.CHECK_RADIO).text
         return status
+
+
+class WebTablesPage(BasePage):
+    locators = epl.WebTablesLocators
+
+    def add_record(self):
+        """Add record in table about person"""
+        count = 1  # random.randint(2, 4)
+        # added_persons = []
+        while count > 0:
+            person_info = next(generated_person())
+            # maybe use dict???
+            # person = {
+            #     "first_name": person_info.first_name,
+            #     "last_name": person_info.last_name,
+            #     "email": person_info.email,
+            #     "age": person_info.age,
+            #     "salary": person_info.salary,
+            #     "department": person_info.department,
+            # }
+            first_name = person_info.first_name
+            last_name = person_info.last_name
+            email = person_info.email
+            age = person_info.age
+            salary = person_info.salary
+            department = person_info.department
+            self.element_is_clickable(self.locators.ADD_RECORD_BUTTON).click()
+            time.sleep(2)
+            self.element_is_visible(self.locators.FIRST_NAME_INPUT).send_keys(first_name)
+            self.element_is_visible(self.locators.LAST_NAME_INPUT).send_keys(last_name)
+            self.element_is_visible(self.locators.EMAIL_INPUT).send_keys(email)
+            self.element_is_visible(self.locators.AGE_INPUT).send_keys(age)
+            self.element_is_visible(self.locators.SALARY_INPUT).send_keys(salary)
+            self.element_is_visible(self.locators.DEPARTMENT_INPUT).send_keys(department)
+            self.element_is_clickable(self.locators.SUBMIT_BUTTON).click()
+            count -= 1
+            # added_persons.append([first_name, last_name, str(age), email, str(salary), department])
+            return [first_name, last_name, str(age), email, str(salary), department]
+        # return added_persons
+
+    def get_table_records(self):
+        all_records = self.elements_are_present(self.locators.ALL_RECORDS)
+        persons_info = []
+        for i in all_records:
+            persons_info.append(i.text.split("\n"))
+        return persons_info
+
+    def search_record(self, key):
+        self.element_is_visible(self.locators.SEARCH_BOX_INPUT).send_keys(key)
+
+    def update_record_info(self):
+        person_info = next(generated_person())
+        age = person_info.age
+        self.element_is_visible(self.locators.UPDATE_BUTTON).click()
+        self.element_is_visible(self.locators.AGE_INPUT).clear()
+        self.element_is_visible(self.locators.AGE_INPUT).send_keys(age)
+        self.element_is_clickable(self.locators.SUBMIT_BUTTON).click()
+        return str(age)
+
+    def delete_record(self):
+        self.element_is_visible(self.locators.DELETE_BUTTON).click()
+
+    def select_rows_quantity(self):
+        rows_quantity = [5, 10, 20, 25, 50, 100]
+        data = []
+        for i in rows_quantity:
+            count_row_button = Select(self.element_is_visible(self.locators.SELECT_FIELD))
+            self.go_to_element(self.element_is_visible(self.locators.SELECT_FIELD))
+            count_row_button.select_by_value(str(i))
+            data.append(len(self.get_table_records()))
+        return data, rows_quantity

@@ -30,5 +30,3 @@ class BasePage:
 
     def go_to_element(self, element):
         return self.driver.execute_script("arguments[0].scrollIntoView();", element)
-
-
