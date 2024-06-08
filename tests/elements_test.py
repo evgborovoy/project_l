@@ -1,4 +1,6 @@
+import os
 import random
+import time
 
 import pages.elements_page as pe
 
@@ -125,3 +127,42 @@ class TestElements:
             links_page.open()
             result = links_page.bad_link("https://demoqa.com/bad-request")
             assert result == 400, f"Unexpected result: {result}"
+
+    class TestUploadDownloadPage:
+        def test_download(self, driver):
+            upload_download_page = pe.UploadDownloadPage(driver, "https://demoqa.com/upload-download")
+            upload_download_page.open()
+            upload_download_page.download()
+            file_name = "sampleFile.jpeg"
+            file_names = os.listdir(f"{os.getcwd()}/assets/")
+            print(f"{os.getcwd()}/assets/")
+            print(file_names)
+            assert file_name in file_names, "Failed to download file"
+            os.remove(f"{os.getcwd()}/assets/{file_name}")
+
+        def test_upload(self, driver):
+            upload_download_page = pe.UploadDownloadPage(driver, "https://demoqa.com/upload-download")
+            upload_download_page.open()
+            path = f"{os.getcwd()}/assets/uploadFile.jpg"
+            uploaded_file_name, file_name = upload_download_page.upload(path)
+            assert uploaded_file_name == file_name
+
+    class TestDynamicPropertiesPage:
+
+        def test_enable_button(self, driver):
+            dynamic_properties_page = pe.DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
+            dynamic_properties_page.open()
+            result = dynamic_properties_page.enable_button()
+            assert result, "Button is not enable"
+
+        def test_color_button(self, driver):
+            dynamic_properties_page = pe.DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
+            dynamic_properties_page.open()
+            color_before, color_after = dynamic_properties_page.color_button()
+            assert color_after != color_before, "Button is not change color"
+
+        def test_visible_button(self, driver):
+            dynamic_properties_page = pe.DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
+            dynamic_properties_page.open()
+            result = dynamic_properties_page.visible_button()
+            assert result, "Button is not appear"

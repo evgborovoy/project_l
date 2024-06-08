@@ -61,3 +61,13 @@ class ButtonPageLocators:
 class LinksPageLocators:
     SIMPLE_LINK = (By.XPATH, "//a[@id='simpleLink']")
     BROKEN_LINK = (By.XPATH, "//a[@id='bad-request']")
+
+class UploadDownloadPage:
+    DOWNLOAD_BUTTON = (By.XPATH, "//a[@id='downloadButton']")
+    UPLOAD_BUTTON = (By.XPATH, "//input[@id='uploadFile']")
+    UPLOAD_FIELD_PATH = (By.XPATH, "//p[@id='uploadedFilePath']")
+
+class DynamicPropertiesPageLocators:
+    ENABLE_BUTTON = (By.XPATH, "//button[@id='enableAfter']")
+    COLOR_BUTTON = (By.XPATH, "//button[@id='colorChange']")
+    VISIBLE_BUTTON = (By.XPATH, "//button[@id='visibleAfter']")

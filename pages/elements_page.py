@@ -1,5 +1,8 @@
 import random
+import time
+
 import requests
+from selenium.common import TimeoutException
 
 from generator.generator import generated_person
 import locators.element_page_lockators as epl
@@ -175,6 +178,7 @@ class ButtonsPage(BasePage):
             return True
         return False
 
+
 class LinksPage(BasePage):
     locators = epl.LinksPageLocators()
 
@@ -194,3 +198,44 @@ class LinksPage(BasePage):
         if response.status_code == 400:
             return response.status_code
         self.element_is_visible(self.locators.BROKEN_LINK)
+
+
+class UploadDownloadPage(BasePage):
+    locators = epl.UploadDownloadPage
+
+    def download(self):
+        self.element_is_visible(self.locators.DOWNLOAD_BUTTON).click()
+        time.sleep(1)
+
+    def upload(self, path):
+        file_name = path.split("/")[-1]
+        self.element_is_clickable(self.locators.UPLOAD_BUTTON).send_keys(path)
+        time.sleep(1)
+        uploaded_path = self.element_is_present(self.locators.UPLOAD_FIELD_PATH).text
+        uploaded_file_name = uploaded_path.split("\\")[-1]
+        return uploaded_file_name, file_name
+
+
+class DynamicPropertiesPage(BasePage):
+    locators = epl.DynamicPropertiesPageLocators()
+
+    def enable_button(self):
+        try:
+            self.element_is_clickable(self.locators.ENABLE_BUTTON)
+        except TimeoutException:
+            return False
+        return True
+
+    def color_button(self):
+        button = self.element_is_present(self.locators.COLOR_BUTTON)
+        color_before = button.value_of_css_property("color")
+        time.sleep(5.5)
+        color_after = button.value_of_css_property("color")
+        return color_before, color_after
+
+    def visible_button(self):
+        try:
+            self.element_is_visible(self.locators.VISIBLE_BUTTON)
+        except TimeoutException:
+            return False
+        return True
