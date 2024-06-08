@@ -5,7 +5,7 @@ import requests
 from selenium.common import TimeoutException
 
 from generator.generator import generated_person
-import locators.element_page_lockators as epl
+import locators.element_page_locators as epl
 from pages.base_page import BasePage
 from selenium.webdriver.support.select import Select
 

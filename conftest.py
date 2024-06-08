@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.options import Options
 def driver():
     options = Options()
     prefs = {
-        "download.default_directory": f"{os.getcwd()}/assets/",
+        "download.default_directory": f"{os.getcwd()}/assets",
         "safebrowsing.enabled": True
     }
     options.add_experimental_option("prefs", prefs)

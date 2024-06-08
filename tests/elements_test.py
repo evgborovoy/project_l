@@ -166,3 +166,6 @@ class TestElements:
             dynamic_properties_page.open()
             result = dynamic_properties_page.visible_button()
             assert result, "Button is not appear"
+
+
+

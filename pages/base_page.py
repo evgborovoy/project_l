@@ -4,9 +4,16 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 
 class BasePage:
+
+
     def __init__(self, driver, url):
         self.driver = driver
         self.url = url
+
+    def remove_footer(self):
+        self.driver.execute_script("document.getElementsByTagName('footer')[0].remove();")
+        self.driver.execute_script("document.getElementById('fixedban').remove();")
+
 
     def open(self):
         self.driver.get(self.url)
