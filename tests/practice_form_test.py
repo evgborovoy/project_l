@@ -10,7 +10,7 @@ class TestFormsPage:
         def test_form(self, driver):
             practice_form_page = PracticeFormPage(driver, "https://demoqa.com/automation-practice-form")
             practice_form_page.open()
-            path = f"{os.getcwd()}/assets/uploadFile.jpg"
+            path = f"{os.getcwd()}/tests/assets/uploadFile.jpg"
             image_name = path.split("/")[-1]
             p, subject = practice_form_page.fill_form(path)
             result = practice_form_page.form_result()
