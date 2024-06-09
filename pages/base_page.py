@@ -49,5 +49,11 @@ class BasePage:
         action.context_click(element)
         action.perform()
 
-    def switch_to(self):
+    def switch_to_window(self):
         return self.driver.switch_to.window(self.driver.window_handles[1])
+
+    def switch_to_alert(self, timeout=10):
+        alert = wait(self.driver, timeout).until(EC.alert_is_present(), message="issue with alert")
+        self.driver.switch_to.alert
+        return alert
+
