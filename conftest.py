@@ -13,7 +13,7 @@ def driver():
     }
     options.add_experimental_option("prefs", prefs)
     options.page_load_strategy = "eager"
-    # options.add_argument("--headless")
+    options.add_argument("--headless")
     options.add_argument("--window-size=1920,1080")
     driver = webdriver.Chrome(options=options)
     driver.maximize_window()
