@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 
-class Accordian:
+class AccordianLocators:
     FIRST_SECTION = (By.XPATH, "//div[@id='section1Heading']")
     FIRST_SECTION_CONTENT = (By.XPATH, "//div[@id='section1Content']//p")
     FIRST_SECTION_SHOW = (By.XPATH, "(//div[@class='card']/div[2])[1]")
@@ -11,3 +11,36 @@ class Accordian:
     THIRD_SECTION = (By.XPATH, "//div[@id='section3Heading']")
     THIRD_SECTION_CONTENT = (By.XPATH, "//div[@id='section3Content']//p")
     THIRD_SECTION_SHOW = (By.XPATH, "(//div[@class='card']/div[2])[3]")
+
+
+class AutoCompleteLocators:
+    MULTIPLE_CONTAINER = (By.CSS_SELECTOR, "input[id='autoCompleteMultipleInput']")
+    MULTIPLE_CONTAINER_VALUE = (By.XPATH, "//div[contains(@class,'auto-complete__multi-value__label')]")
+    MULTIPLE_CONTAINER_VALUE_REMOVE = (By.XPATH, "//div[contains(@class,'auto-complete__multi-value__remove')]")
+    MULTIPLE_CONTAINER_VALUE_REMOVE_ALL = (By.XPATH, "//div[contains(@class,'auto-complete__indicators')]")
+    SINGLE_CONTAINER = (By.XPATH, "//input[@id='autoCompleteSingleInput']")
+    SINGLE_CONTAINER_VALUE = (By.XPATH, "//div[contains(@class,'auto-complete__single-value')]")
+
+
+class DatePickerLocators:
+    DATE_FIELD = (By.XPATH, "//input[@id='datePickerMonthYearInput']")
+    DATE_MONTH_FIELD = (By.XPATH, "//select[@class='react-datepicker__month-select']")
+    DATE_DAY_FIELD = (By.XPATH, "//div[contains(@class, 'react-datepicker__day react-datepicker__day')]")
+    DATE_YEAR_FIELD = (By.XPATH, "//select[@class='react-datepicker__year-select']")
+
+    DATE_AND_TIME_FIELD = (By.XPATH, "//input[@id='dateAndTimePickerInput']")
+    DATE_AND_TIME_MONTH_FIELD = (By.XPATH, "//div[@class='react-datepicker__month-read-view']")
+    DATE_AND_TIME_MONTH_LIST = (By.XPATH, "//div[@class='react-datepicker__month-option']")
+    DATE_AND_TIME_YEAR_FIELD = (By.XPATH, "//div[@class='react-datepicker__year-read-view']")
+    DATE_AND_TIME_YEAR_LIST = (By.XPATH, "//div[@class='react-datepicker__year-option']")
+    DATE_AND_TIME_DAY_FIELD = (By.XPATH, "//div[contains(@class, 'react-datepicker__day react-datepicker__day')]")
+    DATE_AND_TIME_TIME_LIST = (By.XPATH, "//li[@class='react-datepicker__time-list-item ']")
+
+class SliderPageLocators:
+    SLIDER_INPUT = (By.XPATH, "//input[@type='range']")
+    SLIDER_VALUE = (By.XPATH, "//input[@id='sliderValue']")
+
+class ProgressBarLocators:
+    START_STOP_BUTTON = (By.XPATH, "//button[@id='startStopButton']")
+    PROGRESS_BAR = (By.XPATH, "//div[@role='progressbar']")
+

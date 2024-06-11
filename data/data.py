@@ -13,3 +13,10 @@ class Person:
     salary: int = None
     department: str = None
     mobile: str = None
+
+@dataclass
+class Date:
+    date: str = None
+    month: str = None
+    year: str = None
+    time: str = None

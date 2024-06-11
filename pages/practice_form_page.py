@@ -40,4 +40,3 @@ class PracticeFormPage(BasePage):
         for i in result:
             data.append(i.text)
         return data
-

@@ -1,5 +1,4 @@
 import os
-import time
 
 from pages.practice_form_page import PracticeFormPage
 

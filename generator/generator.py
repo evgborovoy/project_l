@@ -1,9 +1,10 @@
 import random
 
-from data.data import Person
+from data.data import Person, Date
 from faker import Faker
 
 faker_ru = Faker("ru_RU")
+faker = Faker("EN")
 Faker.seed()
 
 
@@ -19,4 +20,12 @@ def generated_person():
         last_name=faker_ru.last_name(),
         department=faker_ru.job(),
         mobile=faker_ru.msisdn()
+    )
+
+def generated_date():
+    yield Date(
+        date=faker.day_of_month(),
+        month=faker.month_name(),
+        year=faker.year(),
+        time="14:00"
     )
