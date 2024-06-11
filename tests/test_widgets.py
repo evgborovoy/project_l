@@ -1,6 +1,5 @@
-import time
-
-from pages.widgets_page import AccordianPage, AutoCompletePage, DatePickerPage, ProgressBarPage, SliderPage
+from pages.widgets_page import AccordianPage, AutoCompletePage, DatePickerPage, ProgressBarPage, \
+    SliderPage, TabsPage, ToolTipsPage
 
 
 class TestWidgets:
@@ -49,7 +48,7 @@ class TestWidgets:
             print(after)
             assert before != after
 
-        def test_date_pick(self, driver):
+        def test_date_pick(self, driver):  # TODO: Работает каждый раз по-разному
             date_pick_page = DatePickerPage(driver, "https://demoqa.com/date-picker")
             date_pick_page.open()
             before, after = date_pick_page.date_pick()
@@ -70,3 +69,33 @@ class TestWidgets:
             progress_bar_page.open()
             before, after = progress_bar_page.check_progress_bar()
             assert before != after, "Progress bar has not change value"
+
+    class TestTabsPage:
+        def test_tabs(self, driver):
+            tabs_page = TabsPage(driver, "https://demoqa.com/tabs")
+            tabs_page.open()
+            tabs = ["what", "origin", "use"]
+            expected_tabs_title = ["What", "Origin", "Use"]
+            for i in range(len(tabs)):
+                title, content = tabs_page.check_tabs(tabs[i])
+                assert title == expected_tabs_title[i] and content > 0, \
+                    f"Title or content of tab {title} is incorrect"
+
+    class TestToolTips:
+        def test_hover_on_button(self, driver):
+            tool_tips_page = ToolTipsPage(driver, "https://demoqa.com/tool-tips")
+            tool_tips_page.open()
+            result = tool_tips_page.hover_on_button()
+            assert result == "You hovered over the Button", "Tip is not appear on button"
+
+        def test_hover_on_input_field(self, driver):
+            tool_tips_page = ToolTipsPage(driver, "https://demoqa.com/tool-tips")
+            tool_tips_page.open()
+            result = tool_tips_page.hover_on_input_field()
+            assert result == "You hovered over the text field", "Tip is not appear on button"
+
+        def test_hover_on_text(self, driver):
+            tool_tips_page = ToolTipsPage(driver, "https://demoqa.com/tool-tips")
+            tool_tips_page.open()
+            result = tool_tips_page.hover_on_text()
+            assert result == "You hovered over the Contrary", "Tip is not appear on button"

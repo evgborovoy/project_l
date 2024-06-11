@@ -66,6 +66,7 @@ class AutoCompletePage(BasePage):
         for color in colors_input:
             field = self.element_is_clickable(self.locators.MULTIPLE_CONTAINER)
             field.send_keys(color[:3])
+            time.sleep(.2)
             field.send_keys(Keys.ENTER)
         colors_from_field = list(
             map(lambda x: x.text, self.get_colors_from_multiple_field()))
@@ -169,3 +170,45 @@ class ProgressBarPage(BasePage):
         value_after = self.element_is_present(self.locators.PROGRESS_BAR).text
         return value, value_after
 
+
+class TabsPage(BasePage):
+    locators = locators.TabsPageLocators()
+
+    def check_tabs(self, tab):
+        tabs = {
+            "what": {
+                "button": self.locators.TAB_WHAT,
+                "content": self.locators.TAB_WHAT_CONTENT
+            },
+            "origin": {
+                "button": self.locators.TAB_ORIGIN,
+                "content": self.locators.TAB_ORIGIN_CONTENT
+            },
+            "use": {
+                "button": self.locators.TAB_USE,
+                "content": self.locators.TAB_USE_CONTENT
+            }
+        }
+        button = self.element_is_visible(tabs[tab]["button"])
+        button.click()
+        title = button.text
+        content = self.element_is_visible(tabs[tab]["content"]).text
+        return title, len(content)
+
+
+class ToolTipsPage(BasePage):
+    locators = locators.ToolTipsPageLocators()
+
+    def hover_on_element(self, element, hover):
+        self.move_to_element(element)
+        self.element_is_visible(hover)
+        return self.element_is_visible(self.locators.TIP).text
+
+    def hover_on_button(self):
+        return self.hover_on_element(self.locators.BUTTON, self.locators.BUTTON_HOVERED)
+
+    def hover_on_input_field(self):
+        return self.hover_on_element(self.locators.INPUT_FIELD, self.locators.INPUT_FIELD_HOVERED)
+
+    def hover_on_text(self):
+        return self.hover_on_element(self.locators.CONTRARY, self.locators.CONTRARY_HOVERED)

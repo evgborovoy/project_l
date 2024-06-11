@@ -36,11 +36,31 @@ class DatePickerLocators:
     DATE_AND_TIME_DAY_FIELD = (By.XPATH, "//div[contains(@class, 'react-datepicker__day react-datepicker__day')]")
     DATE_AND_TIME_TIME_LIST = (By.XPATH, "//li[@class='react-datepicker__time-list-item ']")
 
+
 class SliderPageLocators:
     SLIDER_INPUT = (By.XPATH, "//input[@type='range']")
     SLIDER_VALUE = (By.XPATH, "//input[@id='sliderValue']")
+
 
 class ProgressBarLocators:
     START_STOP_BUTTON = (By.XPATH, "//button[@id='startStopButton']")
     PROGRESS_BAR = (By.XPATH, "//div[@role='progressbar']")
 
+
+class TabsPageLocators:
+    TAB_WHAT = (By.XPATH, "//a[@id='demo-tab-what']")
+    TAB_WHAT_CONTENT = (By.XPATH, "//div[@id='demo-tabpane-what']")
+    TAB_ORIGIN = (By.XPATH, "//a[@id='demo-tab-origin']")
+    TAB_ORIGIN_CONTENT = (By.XPATH, "//div[@id='demo-tabpane-origin']")
+    TAB_USE = (By.XPATH, "//a[@id='demo-tab-use']")
+    TAB_USE_CONTENT = (By.XPATH, "//div[@id='demo-tabpane-use']")
+
+
+class ToolTipsPageLocators:
+    BUTTON = (By.XPATH, "//button[@id='toolTipButton']")
+    BUTTON_HOVERED = (By.XPATH, "//button[@aria-describedby='buttonToolTip']")
+    INPUT_FIELD = (By.XPATH, "//input[@id='toolTipTextField']")
+    INPUT_FIELD_HOVERED = (By.XPATH, "//input[@aria-describedby='textFieldToolTip']")
+    CONTRARY = (By.XPATH, "//a[text()='Contrary']")
+    CONTRARY_HOVERED = (By.XPATH, "//a[@aria-describedby='contraryTexToolTip']")
+    TIP = (By.XPATH, "//div[@class='tooltip-inner']")

@@ -60,3 +60,8 @@ class BasePage:
         alert = wait(self.driver, timeout).until(EC.alert_is_present(), message="issue with alert")
         self.driver.switch_to.alert
         return alert
+
+    def move_to_element(self, element):
+        action = ActionChains(self.driver)
+        action.move_to_element(self.element_is_visible(element))
+        action.perform()
