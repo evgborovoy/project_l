@@ -15,6 +15,7 @@ class AccordianPage(BasePage):
     locators = locators.AccordianLocators()
 
     def accordian_content(self, accordian_num):
+        self.remove_ads()
         accordian = {
             "first": {
                 "title": self.locators.FIRST_SECTION,
@@ -38,6 +39,7 @@ class AccordianPage(BasePage):
         return title, len(content)
 
     def accordian_show(self):
+        self.remove_ads()
         accordion_show = [self.locators.FIRST_SECTION_SHOW, self.locators.SECOND_SECTION_SHOW,
                           self.locators.THIRD_SECTION_SHOW]
         accordion = [self.locators.FIRST_SECTION, self.locators.SECOND_SECTION, self.locators.THIRD_SECTION]
@@ -61,6 +63,7 @@ class AutoCompletePage(BasePage):
     locators = locators.AutoCompleteLocators()
 
     def multiple_auto_complete(self):
+        self.remove_ads()
         colors_list = ["Red", "Green", "Blue", "Black", "Yellow", "Purple", "White", "Indigo", "Magenta", "Aqua"]
         colors_input = random.sample(colors_list, random.randint(2, 5))
         for color in colors_input:
@@ -73,6 +76,7 @@ class AutoCompletePage(BasePage):
         return colors_from_field, colors_input
 
     def remove_multiply_by_one(self):
+        self.remove_ads()
         colors_count_before, _ = self.multiple_auto_complete()
         remove = self.elements_are_visible(self.locators.MULTIPLE_CONTAINER_VALUE_REMOVE)
         remove[0].click()
@@ -83,6 +87,7 @@ class AutoCompletePage(BasePage):
         return self.elements_are_present(self.locators.MULTIPLE_CONTAINER_VALUE)
 
     def single_value(self):
+        self.remove_ads()
         colors_list = ["Red", "Green", "Blue", "Black", "Yellow", "Purple", "White", "Indigo", "Magenta", "Aqua"]
         color_input = random.choice(colors_list)
         field = self.element_is_clickable(self.locators.SINGLE_CONTAINER)
@@ -96,7 +101,7 @@ class DatePickerPage(BasePage):
     locators = locators.DatePickerLocators()
 
     def date_sand_value(self):
-        date = next(generated_date())
+        self.remove_ads()
         input_date = self.element_is_visible(self.locators.DATE_FIELD)
         value_before = input_date.get_attribute("value")
         for i in range(10):  # Почему-то input_date.clear() не очищает поле
@@ -107,6 +112,7 @@ class DatePickerPage(BasePage):
         return value_before, value_after
 
     def date_pick(self):
+        self.remove_ads()
         date = next(generated_date())
         input_date = self.element_is_visible(self.locators.DATE_FIELD)
         value_before = input_date.get_attribute("value")
@@ -150,6 +156,7 @@ class SliderPage(BasePage):
     locators = locators.SliderPageLocators()
 
     def change_slider_value(self):
+        self.remove_ads()
         value = self.element_is_visible(self.locators.SLIDER_VALUE)
         value_before = value.get_attribute("value")
         slider = self.element_is_visible(self.locators.SLIDER_INPUT)
@@ -162,6 +169,7 @@ class ProgressBarPage(BasePage):
     locators = locators.ProgressBarLocators()
 
     def check_progress_bar(self):
+        self.remove_ads()
         value = self.element_is_present(self.locators.PROGRESS_BAR).text
         button = self.element_is_visible(self.locators.START_STOP_BUTTON)
         button.click()
@@ -175,6 +183,7 @@ class TabsPage(BasePage):
     locators = locators.TabsPageLocators()
 
     def check_tabs(self, tab):
+        self.remove_ads()
         tabs = {
             "what": {
                 "button": self.locators.TAB_WHAT,
@@ -200,7 +209,7 @@ class ToolTipsPage(BasePage):
     locators = locators.ToolTipsPageLocators()
 
     def hover_on_element(self, element, hover):
-        self.move_to_element(element)
+        self.move_to_element(self.element_is_visible(element))
         self.element_is_visible(hover)
         return self.element_is_visible(self.locators.TIP).text
 
@@ -212,3 +221,16 @@ class ToolTipsPage(BasePage):
 
     def hover_on_text(self):
         return self.hover_on_element(self.locators.CONTRARY, self.locators.CONTRARY_HOVERED)
+
+class MenuPage(BasePage):
+
+    locators = locators.MenuPageLocators()
+    def menu_item(self):
+        self.remove_ads()
+        list = self.elements_are_present(self.locators.MENU_ITEM_LIST)
+        data = []
+        for item in list:
+            self.move_to_element(item)
+            data.append(item.text)
+        return data
+

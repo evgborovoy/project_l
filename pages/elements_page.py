@@ -44,6 +44,7 @@ class CheckBoxPage(BasePage):
         self.element_is_visible(self.locators.EXPAND_ALL_BUTTON).click()
 
     def select_random_checkbox(self):
+        self.remove_ads()
         item_list = self.elements_are_visible(self.locators.ALL_TITLES_LIST)
         indexes = list(range(len(item_list)))
         for i in range(7):
@@ -142,6 +143,7 @@ class WebTablesPage(BasePage):
         return str(age)
 
     def delete_record(self):
+        self.remove_ads()
         self.element_is_visible(self.locators.DELETE_BUTTON).click()
 
     def select_rows_quantity(self):
@@ -159,12 +161,14 @@ class ButtonsPage(BasePage):
     locators = epl.ButtonPageLocators()
 
     def one_click(self):
+        self.remove_ads()
         self.element_is_clickable(self.locators.CLICK_BUTTON).click()
         if self.element_is_present(self.locators.CHECK_CLICK_BUTTON):
             return True
         return False
 
     def double_click(self):
+        self.remove_ads()
         self.go_to_element(self.element_is_visible(self.locators.DOUBLE_CLICK_BUTTON))
         self.action_double_click(self.element_is_clickable(self.locators.DOUBLE_CLICK_BUTTON))
         if self.element_is_present(self.locators.CHECK_DOUBLE_CLICK_BUTTON):
@@ -172,6 +176,7 @@ class ButtonsPage(BasePage):
         return False
 
     def right_click(self):
+        self.remove_ads()
         self.go_to_element(self.element_is_visible(self.locators.RIGHT_CLICK_BUTTON))
         self.action_right_click(self.element_is_clickable(self.locators.RIGHT_CLICK_BUTTON))
         if self.element_is_present(self.locators.CHECK_RIGHT_CLICK_BUTTON):
@@ -220,6 +225,7 @@ class DynamicPropertiesPage(BasePage):
     locators = epl.DynamicPropertiesPageLocators()
 
     def enable_button(self):
+        self.remove_ads()
         try:
             self.element_is_clickable(self.locators.ENABLE_BUTTON)
         except TimeoutException:
@@ -234,6 +240,7 @@ class DynamicPropertiesPage(BasePage):
         return color_before, color_after
 
     def visible_button(self):
+        self.remove_ads()
         try:
             self.element_is_visible(self.locators.VISIBLE_BUTTON)
         except TimeoutException:

@@ -9,9 +9,10 @@ class BasePage:
         self.driver = driver
         self.url = url
 
-    def remove_footer(self):
+    def remove_ads(self):
         self.driver.execute_script("document.getElementsByTagName('footer')[0].remove();")
         self.driver.execute_script("document.getElementById('fixedban').remove();")
+        self.driver.execute_script("document.getElementById('Ad.Plus-970x250-1').remove();")
 
     def open(self):
         self.driver.get(self.url)
@@ -63,5 +64,10 @@ class BasePage:
 
     def move_to_element(self, element):
         action = ActionChains(self.driver)
-        action.move_to_element(self.element_is_visible(element))
+        action.move_to_element(element)
+        action.perform()
+
+    def drag_and_drop(self, element_from, element_to):
+        action = ActionChains(self.driver)
+        action.drag_and_drop(element_from, element_to)
         action.perform()

@@ -64,3 +64,6 @@ class ToolTipsPageLocators:
     CONTRARY = (By.XPATH, "//a[text()='Contrary']")
     CONTRARY_HOVERED = (By.XPATH, "//a[@aria-describedby='contraryTexToolTip']")
     TIP = (By.XPATH, "//div[@class='tooltip-inner']")
+
+class MenuPageLocators:
+    MENU_ITEM_LIST = (By.XPATH, "//ul[@id='nav']//li/a")

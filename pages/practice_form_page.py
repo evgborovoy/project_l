@@ -11,7 +11,7 @@ class PracticeFormPage(BasePage):
     locators = PracticeFormLocators()
 
     def fill_form(self, image_path):
-        self.remove_footer()
+        self.remove_ads()
         person_info = next(generated_person())
         self.element_is_visible(self.locators.FIRST_NAME).send_keys(person_info.first_name)
         self.element_is_visible(self.locators.LAST_NAME).send_keys(person_info.last_name)
