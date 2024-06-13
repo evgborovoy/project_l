@@ -66,8 +66,8 @@ class ResizablePage(BasePage):
     locators = locators.ResizablePageLocators()
 
     def get_px_from_size(self, value_of_size):
-        width = value_of_size.split(";")[0].split(":")[1].replace(" ","")
-        height = value_of_size.split(";")[1].split(":")[1].replace(" ","")
+        width = value_of_size.split(";")[0].split(":")[1].replace(" ", "")
+        height = value_of_size.split(";")[1].split(":")[1].replace(" ", "")
         return width, height
 
     def get_max_min_size(self, element):
@@ -93,3 +93,71 @@ class ResizablePage(BasePage):
                                             random.randint(-200, -1), random.randint(-200, -1))
         min_size = self.get_px_from_size(self.get_max_min_size(self.locators.WINDOW))
         return max_size, min_size
+
+
+class DroppablePage(BasePage):
+    locators = locators.DroppablePageLocators()
+
+    def simple(self):
+        self.remove_ads()
+        drag = self.element_is_visible(self.locators.SIMPLE_TAB_DRAG)
+        drop = self.element_is_visible(self.locators.SIMPLE_TAB_DROP)
+        self.drag_and_drop(drag, drop)
+        return drop.text
+
+    def accept(self):
+        self.remove_ads()
+        self.element_is_visible(self.locators.ACCEPT_TAB).click()
+        accept = self.element_is_visible(self.locators.ACCEPT_TAB_DRAG_ACCEPTABLE)
+        not_accept = self.element_is_visible(self.locators.ACCEPT_TAB_DRAG_NOT_ACCEPTABLE)
+        drop = self.element_is_visible(self.locators.ACCEPT_TAB_DROP)
+        self.drag_and_drop(not_accept, drop)
+        if drop.text != "Drop here":
+            return drop.text, "Not acceptable box was accept"
+        self.drag_and_drop(accept, drop)
+        return drop.text, "Acceptable element has not been dropped"
+
+    def prevent_propogation(self):
+        self.remove_ads()
+        self.element_is_visible(self.locators.PREVENT_TAB).click()
+        drag = self.element_is_visible(self.locators.PREVENT_TAB_DRAG)
+        not_greedy_inner = self.element_is_visible(self.locators.PREVENT_NOT_GREEDY_INNER)
+        not_greedy_outer = self.element_is_visible(self.locators.PREVENT_NOT_GREEDY_OUTER)
+        
+        self.drag_and_drop(drag, not_greedy_inner)
+        not_greedy_inner_text = not_greedy_inner.text
+        not_greedy_outer_text = not_greedy_outer.text
+        
+        greedy_inner = self.element_is_visible(self.locators.PREVENT_GREEDY_INNER)
+        greedy_outer = self.element_is_visible(self.locators.PREVENT_GREEDY_OUTER)
+
+        self.drag_and_drop(drag,greedy_inner)
+        greedy_inner_text = greedy_inner.text
+        greedy_outer_text = greedy_outer.text
+        return not_greedy_inner_text, not_greedy_outer_text, greedy_inner_text, greedy_outer_text
+
+    def revert(self):
+        self.remove_ads()
+        self.element_is_visible(self.locators.REVERT_TAB).click()
+        revert = self.element_is_visible(self.locators.WILL_REVERT)
+        drop = self.element_is_visible(self.locators.DROP_REVERT)
+        self.drag_and_drop(revert, drop)
+        revert_before = revert.get_attribute("style")
+        time.sleep(1)
+        revert_after = revert.get_attribute("style")
+        return revert_before, revert_after
+
+    def not_revert(self):
+        self.element_is_visible(self.locators.REVERT_TAB).click()
+        not_revert = self.element_is_visible(self.locators.NOT_REVERT)
+        drop = self.element_is_visible(self.locators.DROP_REVERT)
+        self.drag_and_drop(not_revert, drop)
+        not_revert_before = not_revert.get_attribute("style")
+        time.sleep(1)
+        not_revert_after = not_revert.get_attribute("style")
+        return not_revert_before, not_revert_after
+
+
+
+
+
