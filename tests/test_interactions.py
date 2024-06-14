@@ -1,6 +1,6 @@
 import time
 
-from pages.interactions_page import SortablePage, SelectablePage, ResizablePage, DroppablePage
+from pages.interactions_page import SortablePage, SelectablePage, ResizablePage, DroppablePage, DragabblePage
 
 
 class TestInteractions:
@@ -75,3 +75,24 @@ class TestInteractions:
             not_revert_before, not_revert_after = droppable_page.not_revert()
             assert revert_before != revert_after
             assert not_revert_before == not_revert_after
+
+    class TestDragabblePage:
+        def test_simple(self, driver):
+            draggable_page = DragabblePage(driver, "https://demoqa.com/dragabble")
+            draggable_page.open()
+            before, after = draggable_page.simple_drag_box()
+            assert before != after, "Element has not been move"
+
+        def test_axis_x(self, driver):
+            draggable_page = DragabblePage(driver, "https://demoqa.com/dragabble")
+            draggable_page.open()
+            before_top, after_top, before_left, after_left = draggable_page.axis_x_drag_box()
+            assert before_top == after_top, "Element was move on Y-axis"
+            assert before_left != after_left, "Element was not move on X-axis"
+
+        def test_axis_Y(self, driver):
+            draggable_page = DragabblePage(driver, "https://demoqa.com/dragabble")
+            draggable_page.open()
+            before_top, after_top, before_left, after_left = draggable_page.axis_y_drag_box()
+            assert before_top != after_top, "Element was move on X-axis"
+            assert before_left == after_left, "Element was not move on Y-axis"

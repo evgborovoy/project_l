@@ -1,4 +1,5 @@
 import random
+import re
 import time
 
 from locators import interactions_page_locators as locators
@@ -123,15 +124,15 @@ class DroppablePage(BasePage):
         drag = self.element_is_visible(self.locators.PREVENT_TAB_DRAG)
         not_greedy_inner = self.element_is_visible(self.locators.PREVENT_NOT_GREEDY_INNER)
         not_greedy_outer = self.element_is_visible(self.locators.PREVENT_NOT_GREEDY_OUTER)
-        
+
         self.drag_and_drop(drag, not_greedy_inner)
         not_greedy_inner_text = not_greedy_inner.text
         not_greedy_outer_text = not_greedy_outer.text
-        
+
         greedy_inner = self.element_is_visible(self.locators.PREVENT_GREEDY_INNER)
         greedy_outer = self.element_is_visible(self.locators.PREVENT_GREEDY_OUTER)
 
-        self.drag_and_drop(drag,greedy_inner)
+        self.drag_and_drop(drag, greedy_inner)
         greedy_inner_text = greedy_inner.text
         greedy_outer_text = greedy_outer.text
         return not_greedy_inner_text, not_greedy_outer_text, greedy_inner_text, greedy_outer_text
@@ -158,6 +159,47 @@ class DroppablePage(BasePage):
         return not_revert_before, not_revert_after
 
 
+class DragabblePage(BasePage):
+    locators = locators.DragabblePageLoactors()
 
+    def get_before_and_after_position(self, element):
+        self.action_drug_and_drop_by_offset(element, random.randint(5, 10), random.randint(5, 10))
+        position_before = element.get_attribute("style")
+        self.action_drug_and_drop_by_offset(element, random.randint(50, 200), random.randint(50, 200))
+        position_after = element.get_attribute("style")
+        return position_before, position_after
 
+    def get_top_position(self, position):
+        return re.findall(r'\d[0-9]+|\d', position.split(";")[2])
 
+    def get_left_position(self, position):
+        return re.findall(r'\d[0-9]+|\d', position.split(";")[1])
+
+    def simple_drag_box(self):
+        self.remove_ads()
+        self.element_is_visible(self.locators.SIMPLE_TAB).click()
+        drag = self.element_is_visible(self.locators.SIMPLE_DRAG)
+        before, after = self.get_before_and_after_position(drag)
+        return before, after
+
+    def axis_x_drag_box(self):
+        self.remove_ads()
+        self.element_is_visible(self.locators.AXIS_RESTRICTED_TAB).click()
+        drag_x = self.element_is_visible(self.locators.AXIS_RESTRICTED_DRAG_X)
+        position = self.get_before_and_after_position(drag_x)
+        top_before = self.get_top_position(position[0])
+        top_after = self.get_top_position(position[1])
+        left_before= self.get_left_position(position[0])
+        left_after = self.get_left_position(position[1])
+        return top_before, top_after, left_before, left_after
+
+    def axis_y_drag_box(self):
+        self.remove_ads()
+        self.element_is_visible(self.locators.AXIS_RESTRICTED_TAB).click()
+        drag_y = self.element_is_visible(self.locators.AXIS_RESTRICTED_DRAG_Y)
+        position = self.get_before_and_after_position(drag_y)
+        top_before = self.get_top_position(position[0])
+        top_after = self.get_top_position(position[1])
+        left_before = self.get_left_position(position[0])
+        left_after = self.get_left_position(position[1])
+        return top_before, top_after, left_before, left_after

@@ -44,3 +44,15 @@ class DroppablePageLocators:
     NOT_REVERT = (By.XPATH, "//div[@id='notRevertable']")
     DROP_REVERT = (By.XPATH, "//div[@id='revertableDropContainer']/div[@id='droppable']")
 
+class DragabblePageLoactors:
+    SIMPLE_TAB = (By.XPATH, "//a[@id='draggableExample-tab-simple']")
+    SIMPLE_DRAG = (By.XPATH, "//div[@id='dragBox']")
+
+    AXIS_RESTRICTED_TAB = (By.XPATH, "//a[@id='draggableExample-tab-axisRestriction']")
+    AXIS_RESTRICTED_DRAG_X = (By.XPATH, "//div[@id='restrictedX']")
+    AXIS_RESTRICTED_DRAG_Y = (By.XPATH, "//div[@id='restrictedY']")
+
+    CONTAINER_RESTRICTED_TAB = (By.XPATH, "//a[@id='draggableExample-tab-containerRestriction']")
+    CONTAINED_WITHIN_BOX = (By.XPATH, "//div[@id='containmentWrapper']/div")
+    CONTAINED_WITHIN_PARENT = (By.XPATH, "//div[contains(@class,'ui-widget-content m-3')]")
+
